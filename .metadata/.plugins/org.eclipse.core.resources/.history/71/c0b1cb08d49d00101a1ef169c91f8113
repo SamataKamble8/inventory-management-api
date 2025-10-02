@@ -1,0 +1,32 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.Products;
+import com.example.demo.repository.ProductsRepo;
+
+
+@Service
+public class ProductService {
+
+	@Autowired
+	ProductsRepo pr;
+	
+	//get all products
+	public List<Products> getall() {
+		return pr.findAll();
+	}
+
+	//get product by id
+	public Products getbyid(int id) {
+		return pr.findById(id).orElseThrow(()-> new RuntimeException("Student not found"));
+	}
+
+	public Products save(Products p) {
+		return pr.save(p);
+	}
+
+}

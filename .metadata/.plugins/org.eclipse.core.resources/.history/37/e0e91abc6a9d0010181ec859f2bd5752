@@ -1,0 +1,22 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import com.example.demo.entity.Products;
+import com.example.demo.service.ProductService;
+
+@Controller
+public class ProductsController {
+
+	@Autowired
+	ProductService ps;
+	
+	public List<Products> getall()
+	{
+		return ps.getall();
+	
+	}
+}
