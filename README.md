@@ -66,10 +66,10 @@ ________________________________________
    - Select the project folder and finish the import.  
 
 3. Configure MySQL database in `src/main/resources/application.properties`:  
-    spring.datasource.url=jdbc:mysql://localhost:3306/inventory_db
-    spring.datasource.username=root
-    spring.datasource.password=yourpassword
-    spring.jpa.hibernate.ddl-auto=update
+    `spring.datasource.url=jdbc:mysql://localhost:3306/inventory_db`
+    `spring.datasource.username=root`
+    `spring.datasource.password=yourpassword`
+    `spring.jpa.hibernate.ddl-auto=update`
 
 4. Run the application:  
    - Right-click on the project → Run As → Spring Boot App  
