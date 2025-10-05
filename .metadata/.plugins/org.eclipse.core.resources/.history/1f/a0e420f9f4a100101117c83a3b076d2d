@@ -1,0 +1,240 @@
+package com.example.demo.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.example.demo.entity.Products;
+import com.example.demo.repository.ProductsRepo;
+
+public class ProductsServiceTest {
+
+    @InjectMocks
+    private ProductService productService;
+
+    @Mock
+    private ProductsRepo productsRepo;
+
+    private Products product;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        product = new Products();
+        product.setPid(100);
+        product.setName("Laptop");
+        product.setDescription("Gaming Laptop");
+        product.setStock_quantity(10);
+        product.setLow_stock_threshold(5);
+    }
+
+    // ------------------------- CRUD Tests -------------------------
+
+    //test get all
+    @Test
+    void testGetAll() {
+        when(productsRepo.findAll()).thenReturn(Arrays.asList(product));
+        List<Products> products = productService.getall();
+        assertEquals(1, products.size());
+        assertEquals("Laptop", products.get(0).getName());
+    }
+
+    //test getbyid_success
+    @Test
+    void testGetById_Success() {
+        when(productsRepo.findById(1)).thenReturn(Optional.of(product));
+        Products p = productService.getbyid(100);
+        assertEquals("Laptop", p.getName());
+    }
+
+    //test getbyid not found
+    @Test
+    void testGetById_NotFound() {
+        when(productsRepo.findById(100)).thenReturn(Optional.empty());
+        assertThrows(ResponseStatusException.class, () -> productService.getbyid(1));
+    }
+
+    //test save new product
+    @Test
+    void testSave() {
+        when(productsRepo.save(product)).thenReturn(product);
+        Products saved = productService.save(product);
+        assertEquals("Laptop", saved.getName());
+    }
+
+    //test update full product
+    @Test
+    void testUpdate_Success() {
+        Products updatedData = new Products();
+        updatedData.setName("Laptop Pro");
+        updatedData.setDescription("Updated Laptop");
+        updatedData.setStock_quantity(15);
+        updatedData.setLow_stock_threshold(3);
+
+        when(productsRepo.findById(100)).thenReturn(Optional.of(product));
+        when(productsRepo.save(product)).thenReturn(product);
+
+        Products updated = productService.update(100, updatedData);
+        assertEquals("Laptop Pro", updated.getName());
+        assertEquals(15, updated.getStock_quantity());
+    }
+
+    //test update not found
+    @Test
+    void testUpdate_NotFound() {
+        Products updatedData = new Products();
+        when(productsRepo.findById(100)).thenReturn(Optional.empty());
+        assertThrows(ResponseStatusException.class, () -> productService.update(1, updatedData));
+    }
+
+    //test delete successs
+    @Test
+    void testDelete_Success() {
+        when(productsRepo.existsById(100)).thenReturn(true);
+        doNothing().when(productsRepo).deleteById(1);
+        String result = productService.delete(1);
+        assertEquals("Product id 100 deleted successfully", result);
+    }
+
+    //test delete not found
+    @Test
+    void testDelete_NotFound() {
+        when(productsRepo.existsById(100)).thenReturn(false);
+        assertThrows(ResponseStatusException.class, () -> productService.delete(1));
+    }
+    
+ // ------------------------- PATCH / partialUpdate Tests -------------------------
+
+    //test partial update name only
+    @Test
+    void testPartialUpdate_NameOnly() {
+        Products partialData = new Products();
+        partialData.setName("Laptop Pro");
+
+        when(productsRepo.findById(100)).thenReturn(Optional.of(product));
+        when(productsRepo.save(product)).thenReturn(product);
+
+        Products updated = productService.partialUpdate(1, partialData);
+        assertEquals("Laptop Pro", updated.getName());
+        assertEquals(10, updated.getStock_quantity());
+    }
+
+    //test partial update stock quantity
+    @Test
+    void testPartialUpdate_StockOnly() {
+        Products partialData = new Products();
+        partialData.setStock_quantity(15);
+
+        when(productsRepo.findById(1)).thenReturn(Optional.of(product));
+        when(productsRepo.save(product)).thenReturn(product);
+
+        Products updated = productService.partialUpdate(1, partialData);
+        assertEquals(15, updated.getStock_quantity());
+        assertEquals("Laptop", updated.getName());
+    }
+
+    //test partial update low stock threshold
+    @Test
+    void testPartialUpdate_LowStockThresholdOnly() {
+        Products partialData = new Products();
+        partialData.setLow_stock_threshold(3);
+
+        when(productsRepo.findById(1)).thenReturn(Optional.of(product));
+        when(productsRepo.save(product)).thenReturn(product);
+
+        Products updated = productService.partialUpdate(1, partialData);
+        assertEquals(3, updated.getLow_stock_threshold());
+    }
+
+    //test partial update negative stock
+    @Test
+    void testPartialUpdate_NegativeStock_ShouldThrow() {
+        Products partialData = new Products();
+        partialData.setStock_quantity(-5);
+
+        when(productsRepo.findById(1)).thenReturn(Optional.of(product));
+        assertThrows(ResponseStatusException.class, () -> productService.partialUpdate(1, partialData));
+    }
+
+    //test partial update negative low stock
+    @Test
+    void testPartialUpdate_NegativeLowStock_ShouldThrow() {
+        Products partialData = new Products();
+        partialData.setLow_stock_threshold(-2);
+
+        when(productsRepo.findById(1)).thenReturn(Optional.of(product));
+        assertThrows(ResponseStatusException.class, () -> productService.partialUpdate(1, partialData));
+    }
+
+    //test partial update blank name
+    @Test
+    void testPartialUpdate_BlankName_ShouldNotChangeName() {
+        Products partialData = new Products();
+        partialData.setName("  ");
+
+        when(productsRepo.findById(1)).thenReturn(Optional.of(product));
+        when(productsRepo.save(product)).thenReturn(product);
+
+        Products updated = productService.partialUpdate(1, partialData);
+        assertEquals("Laptop", updated.getName());
+    }
+
+    //test partial update product not found
+    @Test
+    void testPartialUpdate_ProductNotFound_ShouldThrow() {
+        Products partialData = new Products();
+        partialData.setName("Laptop Pro");
+
+        when(productsRepo.findById(1)).thenReturn(Optional.empty());
+        assertThrows(ResponseStatusException.class, () -> productService.partialUpdate(1, partialData));
+    }
+
+    // ------------------------- Stock Management Tests -------------------------
+
+    //test increase stock
+    @Test
+    void testIncreaseStock() {
+        when(productsRepo.findById(1)).thenReturn(Optional.of(product));
+        when(productsRepo.save(product)).thenReturn(product);
+
+        Products updated = productService.increseStock(1, 5);
+        assertEquals(15, updated.getStock_quantity());
+    }
+
+    //test decrease stock
+    @Test
+    void testDecreaseStock_Success() {
+        when(productsRepo.findById(1)).thenReturn(Optional.of(product));
+        when(productsRepo.save(product)).thenReturn(product);
+
+        Products updated = productService.decreaseStock(1, 5);
+        assertEquals(5, updated.getStock_quantity());
+    }
+
+    //test decrease stock
+    @Test
+    void testDecreaseStock_Insufficient() {
+        when(productsRepo.findById(1)).thenReturn(Optional.of(product));
+        assertThrows(ResponseStatusException.class, () -> productService.decreaseStock(1, 20));
+    }
+
+    //test get low stock products
+    @Test
+    void testGetLowStockProducts() {
+        when(productsRepo.findLowStock(5)).thenReturn(Arrays.asList(product));
+        List<Products> lowStock = productService.getLowStockProducts();
+        assertEquals(1, lowStock.size());
+    }
+
+    
+}

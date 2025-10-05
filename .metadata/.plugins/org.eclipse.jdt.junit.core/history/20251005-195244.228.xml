@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ProductsServiceTest" project="InventoryManagementSystemAPI_Project" tests="19" started="19" failures="3" errors="0" ignored="0">
+  <testsuite name="com.example.demo.service.ProductsServiceTest" time="1.398" displayname="ProductsServiceTest" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]">
+    <testcase name="testDecreaseStock_Insufficient" classname="com.example.demo.service.ProductsServiceTest" time="1.307" displayname="testDecreaseStock_Insufficient()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testDecreaseStock_Insufficient()]"/>
+    <testcase name="testDelete_Success" classname="com.example.demo.service.ProductsServiceTest" time="0.009" displayname="testDelete_Success()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testDelete_Success()]"/>
+    <testcase name="testGetById_NotFound" classname="com.example.demo.service.ProductsServiceTest" time="0.006" displayname="testGetById_NotFound()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testGetById_NotFound()]"/>
+    <testcase name="testSave" classname="com.example.demo.service.ProductsServiceTest" time="0.005" displayname="testSave()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testSave()]"/>
+    <testcase name="testGetById_Success" classname="com.example.demo.service.ProductsServiceTest" time="0.004" displayname="testGetById_Success()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testGetById_Success()]"/>
+    <testcase name="testPartialUpdate_NegativeStock_ShouldThrow" classname="com.example.demo.service.ProductsServiceTest" time="0.011" displayname="testPartialUpdate_NegativeStock_ShouldThrow()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testPartialUpdate_NegativeStock_ShouldThrow()]">
+      <failure>org.opentest4j.AssertionFailedError: Expected org.springframework.web.server.ResponseStatusException to be thrown, but nothing was thrown.&#13;
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)&#13;
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)&#13;
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)&#13;
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)&#13;
+	at com.example.demo.service.ProductsServiceTest.testPartialUpdate_NegativeStock_ShouldThrow(ProductsServiceTest.java:187)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testGetLowStockProducts" classname="com.example.demo.service.ProductsServiceTest" time="0.004" displayname="testGetLowStockProducts()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testGetLowStockProducts()]"/>
+    <testcase name="testPartialUpdate_BlankName_ShouldNotChangeName" classname="com.example.demo.service.ProductsServiceTest" time="0.003" displayname="testPartialUpdate_BlankName_ShouldNotChangeName()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testPartialUpdate_BlankName_ShouldNotChangeName()]"/>
+    <testcase name="testPartialUpdate_ProductNotFound_ShouldThrow" classname="com.example.demo.service.ProductsServiceTest" time="0.003" displayname="testPartialUpdate_ProductNotFound_ShouldThrow()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testPartialUpdate_ProductNotFound_ShouldThrow()]"/>
+    <testcase name="testDelete_NotFound" classname="com.example.demo.service.ProductsServiceTest" time="0.005" displayname="testDelete_NotFound()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testDelete_NotFound()]"/>
+    <testcase name="testPartialUpdate_LowStockThresholdOnly" classname="com.example.demo.service.ProductsServiceTest" time="0.003" displayname="testPartialUpdate_LowStockThresholdOnly()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testPartialUpdate_LowStockThresholdOnly()]"/>
+    <testcase name="testUpdate_NotFound" classname="com.example.demo.service.ProductsServiceTest" time="0.003" displayname="testUpdate_NotFound()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testUpdate_NotFound()]"/>
+    <testcase name="testIncreaseStock" classname="com.example.demo.service.ProductsServiceTest" time="0.004" displayname="testIncreaseStock()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testIncreaseStock()]"/>
+    <testcase name="testPartialUpdate_NegativeLowStock_ShouldThrow" classname="com.example.demo.service.ProductsServiceTest" time="0.005" displayname="testPartialUpdate_NegativeLowStock_ShouldThrow()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testPartialUpdate_NegativeLowStock_ShouldThrow()]">
+      <failure>org.opentest4j.AssertionFailedError: Expected org.springframework.web.server.ResponseStatusException to be thrown, but nothing was thrown.&#13;
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)&#13;
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)&#13;
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)&#13;
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)&#13;
+	at com.example.demo.service.ProductsServiceTest.testPartialUpdate_NegativeLowStock_ShouldThrow(ProductsServiceTest.java:196)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testGetAll" classname="com.example.demo.service.ProductsServiceTest" time="0.003" displayname="testGetAll()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testGetAll()]"/>
+    <testcase name="testPartialUpdate_StockOnly" classname="com.example.demo.service.ProductsServiceTest" time="0.003" displayname="testPartialUpdate_StockOnly()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testPartialUpdate_StockOnly()]"/>
+    <testcase name="testPartialUpdate_NameOnly" classname="com.example.demo.service.ProductsServiceTest" time="0.006" displayname="testPartialUpdate_NameOnly()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testPartialUpdate_NameOnly()]">
+      <failure>
+        <expected>10</expected>
+        <actual>0</actual>
+        org.opentest4j.AssertionFailedError: expected: &lt;10&gt; but was: &lt;0&gt;&#13;
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)&#13;
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)&#13;
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)&#13;
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)&#13;
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)&#13;
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)&#13;
+	at com.example.demo.service.ProductsServiceTest.testPartialUpdate_NameOnly(ProductsServiceTest.java:153)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+&#13;
+
+      </failure>
+    </testcase>
+    <testcase name="testUpdate_Success" classname="com.example.demo.service.ProductsServiceTest" time="0.003" displayname="testUpdate_Success()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testUpdate_Success()]"/>
+    <testcase name="testDecreaseStock_Success" classname="com.example.demo.service.ProductsServiceTest" time="0.002" displayname="testDecreaseStock_Success()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.service.ProductsServiceTest]/[method:testDecreaseStock_Success()]"/>
+  </testsuite>
+</testrun>

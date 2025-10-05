@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="products")
@@ -13,10 +15,18 @@ public class Products {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int pid;
+	
+	@NotBlank(message = "Product name cannot be null or blank")
 	String name;
+	
+	
 	String description;
-	int stock_quantity;
-	int low_stock_threshold;
+	
+	@Min(value = 0, message = "Stock quantity cannot be negative")
+	private Integer stock_quantity;
+	
+	@Min(value = 0, message = "Low stock threshold cannot be negative")
+	private Integer low_stock_threshold;
 	
 	
 	public Products() {
@@ -34,35 +44,53 @@ public class Products {
 		this.low_stock_threshold = low_stock_threshold;
 	}
 	
-	
+
 	public int getPid() {
 		return pid;
 	}
+
+
 	public void setPid(int pid) {
 		this.pid = pid;
 	}
+
+
 	public String getName() {
 		return name;
 	}
+
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
+
 	public String getDescription() {
 		return description;
 	}
+
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getStock_quantity() {
+
+
+	public Integer getStock_quantity() {
 		return stock_quantity;
 	}
-	public void setStock_quantity(int stock_quantity) {
+
+
+	public void setStock_quantity(Integer stock_quantity) {
 		this.stock_quantity = stock_quantity;
 	}
-	public int getLow_stock_threshold() {
+
+
+	public Integer getLow_stock_threshold() {
 		return low_stock_threshold;
 	}
-	public void setLow_stock_threshold(int low_stock_threshold) {
+
+
+	public void setLow_stock_threshold(Integer low_stock_threshold) {
 		this.low_stock_threshold = low_stock_threshold;
 	}
 

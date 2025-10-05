@@ -1,0 +1,111 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.entity.Products;
+import com.example.demo.service.ProductService;
+
+@RestController
+@RequestMapping("/products")
+public class ProductsController {
+
+	@Autowired
+	ProductService ps;
+
+	
+	//get all products 
+	@GetMapping("/getall")
+	public List<Products> getall()
+	{
+		return ps.getall();
+	
+	}
+	
+	//get by product id
+	@GetMapping("/getbyid")
+	public Products getbyid(@RequestParam("id") int id)
+	{
+		return ps.getbyid(id);
+	}
+	
+	//post- create or save new product
+	@PostMapping("/save")
+	public Products save(@RequestBody Products p)
+	{
+		return ps.save(p);
+	}
+	
+	//update product by id
+	@PutMapping("/update/{id}")
+	public Products update(@PathVariable int id,@RequestBody Products newdata)
+	{
+		return ps.update(id, newdata);
+	}
+	
+	//update particular product ....using patch Mapping
+	@PatchMapping("/update/{id}")
+	public Products partialUpdate(@PathVariable int id, @RequestBody Products partialData) {
+	    Products existingProduct = ps.getbyid(id);
+
+	    // Update only the fields that are not null or non-zero
+	    if (partialData.getName() != null && !partialData.getName().isBlank()) {
+	        existingProduct.setName(partialData.getName());
+	    }
+
+	    if (partialData.getDescription() != null) {
+	        existingProduct.setDescription(partialData.getDescription());
+	    }
+
+	    if (partialData.getStock_quantity() >= 0) {
+	        existingProduct.setStock_quantity(partialData.getStock_quantity());
+	    }
+
+	    if (partialData.getLow_stock_threshold() > 0) {
+	        existingProduct.setLow_stock_threshold(partialData.getLow_stock_threshold());
+	    }
+
+	    return ps.save(existingProduct);
+	}
+
+	
+	//delete product by id
+	@DeleteMapping("/delete")
+	public String delete(@RequestParam("id") int id)
+	{
+		return ps.delete(id);
+	}
+	
+	//Increase Stock
+	@PostMapping("/{id}/increseStock")
+	public Products increseStock(@PathVariable int id,@RequestParam int amount)
+	{
+		return ps.increseStock(id, amount);
+	}
+	
+	//Decrease Stock
+	@PostMapping("/{id}/decreaseStock")
+	public Products decreaseStock(@PathVariable int id,@RequestParam int amount)
+	{
+		return ps.decreaseStock(id, amount);	
+	}
+	
+	//Low Stock 
+	@GetMapping("/getLowStock")
+	public List<Products> getLowStockProducts()
+	{
+		return ps.getLowStockProducts();
+	}
+}

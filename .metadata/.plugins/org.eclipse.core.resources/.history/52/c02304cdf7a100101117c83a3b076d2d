@@ -1,0 +1,106 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.example.demo.entity.Products;
+import com.example.demo.repository.ProductsRepo;
+
+
+@Service
+public class ProductService {
+
+	@Autowired
+	ProductsRepo pr;
+	
+	//get all products
+	public List<Products> getall() {
+		return pr.findAll();
+	}
+
+	//get product by id
+	public Products getbyid(int id) {
+		return pr.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Product not found with id: " + id));
+	}
+
+	//save new product(post)....   validation handled by @Valid in controller
+	public Products save(Products p) {
+		return pr.save(p);
+	}
+	
+	//Full update product by id (using PutMapping)...validation handled by @Valid in controller
+	public Products update(int id,Products newdata) {
+		Products existingProduct = getbyid(id);
+		 
+//		if (newdata.getStock_quantity() < 0) {
+//		        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Stock quantity cannot be negative");
+//		    }
+		
+		    existingProduct.setName(newdata.getName());
+		    existingProduct.setDescription(newdata.getDescription());
+		    existingProduct.setStock_quantity(newdata.getStock_quantity());
+		    existingProduct.setLow_stock_threshold(newdata.getLow_stock_threshold());
+
+		    return pr.save(existingProduct);
+	}
+	
+	//Partial update product data by id ...using patch mapping
+	
+
+
+	
+	
+	//Delete product
+	public String delete(int id)
+	{
+		if(pr.existsById(id))
+		{
+			pr.deleteById(id);
+			return "Product id "+id+" deleted Successfully";
+		}
+		else
+		{
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product id "+id+" Not Found!!!");
+		}
+	}
+	
+	//Increase stock
+	public Products increseStock(int id,int amount)
+	{
+		if (amount < 0)
+		    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Increase amount must be positive");
+
+		Products product=getbyid(id);
+		product.setStock_quantity(product.getStock_quantity() + amount);
+		return pr.save(product);
+	}
+	
+	//Decrease Stock
+	public Products decreaseStock(int id,int amount)
+	{
+		if (amount < 0)
+		    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Decrease amount must be positive");
+
+		Products product = getbyid(id);
+		if(product.getStock_quantity() < amount)
+		{
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Insufficient stock available");
+			
+		}
+		product.setStock_quantity(product.getStock_quantity() - amount);
+		return pr.save(product);
+	}
+
+	//Low Stock 
+	public List<Products> getLowStockProducts() {
+		return pr.findLowStock(5);  //5 is the deafault threadshold;
+	}
+
+	
+}
+
+	

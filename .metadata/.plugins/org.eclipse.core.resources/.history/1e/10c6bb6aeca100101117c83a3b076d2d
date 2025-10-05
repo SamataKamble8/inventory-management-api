@@ -1,0 +1,81 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="products")
+public class Products {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int pid;
+	
+	@NotBlank(message = "Product name cannot be null or blank")
+	String name;
+	
+	String description;
+	
+	int stock_quantity;
+	
+	int low_stock_threshold;
+	
+	
+	public Products() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public Products(int pid, String name, String description, int stock_quantity, int low_stock_threshold) {
+		super();
+		this.pid = pid;
+		this.name = name;
+		this.description = description;
+		this.stock_quantity = stock_quantity;
+		this.low_stock_threshold = low_stock_threshold;
+	}
+	
+	
+	public int getPid() {
+		return pid;
+	}
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public int getStock_quantity() {
+		return stock_quantity;
+	}
+	public void setStock_quantity(int stock_quantity) {
+		this.stock_quantity = stock_quantity;
+	}
+	public int getLow_stock_threshold() {
+		return low_stock_threshold;
+	}
+	public void setLow_stock_threshold(int low_stock_threshold) {
+		this.low_stock_threshold = low_stock_threshold;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Products [pid=" + pid + ", name=" + name + ", description=" + description + ", stock_quantity="
+				+ stock_quantity + ", low_stock_threshold=" + low_stock_threshold + "]";
+	}
+	
+}
