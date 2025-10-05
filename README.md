@@ -107,6 +107,7 @@ ________________________________________
 
 **Author:** 
 Samata Gulab Kamble
-LinkedIn - www.linkedin.com/in/samata-kamble-817900191
-GitHub- https://github.com/SamataKamble8
+[LinkedIn](www.linkedin.com/in/samata-kamble-817900191)  
+[GitHub](https://github.com/SamataKamble8)
+
 
